@@ -8,5 +8,6 @@ target 'Data_Modulization' do
   # Pods for Data_Modulization
      pod 'Alamofire'
      pod 'SwiftyJSON'
+     pod 'SDWebImage'
      # pod 'SkeletonView'
 end

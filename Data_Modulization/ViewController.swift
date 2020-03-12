@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import SDWebImage
 
 struct origin {
     var name: String
@@ -23,9 +24,10 @@ class ViewController: UIViewController {
     var status   = [String]()
     var spicies  = [String]()
     var type     = [String]()
-    var myself = [origin]()
-    var newname = [String]()
-    var newURL = [String]()
+    var myself   = [origin]()
+    var newname  = [String]()
+    var newURL   = [String]()
+    var imageURL = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,15 +53,23 @@ class ViewController: UIViewController {
                 self.status.removeAll()
                 self.type.removeAll()
                 self.spicies.removeAll()
+                self.imageURL.removeAll()
                 for i in resultArray.arrayValue{
                     let nameID = i["name"].stringValue
                     self.charName.append(nameID)
+                    
                     let urlID = i["status"].stringValue
                     self.status.append(urlID)
+                    
                     let typeID = i["type"].stringValue
                     self.type.append(typeID)
+                    
                     let spiciesID = i["species"].stringValue
                     self.spicies.append(spiciesID)
+                    
+                    let newImage = i["image"].stringValue
+                    self.imageURL.append(newImage)
+                    
                     let id = i["origin"]
                     print("id:- \(id)")
                     print("idurl:- \(id["url"])")
@@ -68,6 +78,8 @@ class ViewController: UIViewController {
                     self.newname.append(newjob.name)
                     self.newURL.append(newjob.url)
                     print("newurl:- \(self.newURL)")
+                    
+                    
                 }
                 self.tableview.reloadData()
                 break
@@ -93,7 +105,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         cell.user_status_Details.text  = status[indexPath.row]
         cell.user_type_Details.text    = type[indexPath.row]
         cell.user_spicies_Details.text = newURL[indexPath.row]
-        
+        cell.user_Image.sd_setImage(with: URL(string: imageURL[indexPath.row]), placeholderImage: UIImage(named: "person-42.png"))
         return cell
     }
     
